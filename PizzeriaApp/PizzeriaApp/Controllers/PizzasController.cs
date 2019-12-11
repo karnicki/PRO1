@@ -12,7 +12,7 @@ namespace PizzeriaApp.Controllers
     [ApiController]
     public class PizzasController : ControllerBase
     {
-        private s17129Context _context;
+        private readonly s17129Context _context;
         public PizzasController(s17129Context context)
         {
             _context = context;
