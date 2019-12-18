@@ -20,6 +20,11 @@ namespace PizzeriaApp.Controllers
             _context = context;
         }
 
+
+        /// <summary>
+        /// Endpoint for getting Additives
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult GetAdditives()
         {

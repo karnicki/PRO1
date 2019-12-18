@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PizzeriaApp</name>
+    </assembly>
+    <members>
+        <member name="M:PizzeriaApp.Controllers.AdditivesController.GetAdditives">
+            <summary>
+            Endpoint for getting Additives
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
