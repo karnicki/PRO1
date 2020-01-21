@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using PizzeriaApp.Models;
 
 namespace PizzeriaApp
@@ -45,6 +50,23 @@ namespace PizzeriaApp
                 c.IncludeXmlComments(xmlPath);
 
             });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
+                            ClockSkew = TimeSpan.Zero,
+                            ValidIssuer = "https://localhost:5001", //should come from configuration
+                            ValidAudience = "https://localhost:5001", //should come from configuration
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecretKey"]))
+                        };
+                    });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,5 +85,23 @@ namespace PizzeriaApp
 
             app.UseMvc();
         }
+
+        private static void AddTestData(s17129Context context)
+        {
+            var appUser = new AppUser
+            {
+                Email = "kowalski@wp.pl",
+                EmailConfirmed = true,
+                UserName = "kowal"
+            };
+
+            var pass = new PasswordHasher<AppUser>();
+            appUser.PasswordHash = pass.HashPassword(appUser, "asd123");
+            
+
+            context.SaveChanges();
+        }
+
+
     }
 }

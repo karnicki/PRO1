@@ -26,6 +26,7 @@ namespace PizzeriaApp.Models
         public virtual DbSet<Zamowienie> Zamowienie { get; set; }
         public virtual DbSet<ZamowienieDodatki> ZamowienieDodatki { get; set; }
         public virtual DbSet<ZamowieniePizza> ZamowieniePizza { get; set; }
+        public DbSet<AppUser> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
